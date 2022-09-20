@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+      .resultado {
+        font-weight:  bold;
+        font-size:  6rem;
+        text-align: center;
+        display:  inline-block;
+      }
+
+      table {
+        margin: 0 auto;
+      }
+
+      table, th, tr, td {
+          border: 2px solid #ccc;
+      }
+
+      th {
+        padding: 10px;
+      }
+
+      .canvas-container {
+          margin: 0 auto;
+          border: 1px solid #ccc;
+      }
+    </style>
+</head>
+<body>
+
+  <div class="row align-items-center">
+    <div class="col-10 text-center">
+      <h2>Predicci&oacute;n de n&uacute;meros</h2>
+    </div>
+  </div>
+
+    <div class="container mt-5">
+        <div class="row align-items-center">
+          <div class="col-5">
+            <div id="canvas-container">
+              <canvas id="bigcanvas" width="200" height="200"></canvas>
+              <canvas id="smallcanvas" width="28" height="28" style="display: none;"></canvas>
+            </div>
+          </div>
+
+            <div class="col-2">
+                  <button class="btn btn-secondary" id="limpiar" onclick="borrar_dibujo()">Borrar</button>
+                  <button class="btn btn-primary" id="predecir" onclick="predecir()">Predecir</button>
+            </div>
+
+            <div class="col-5">
+              <table>
+                    <thead>
+                    <th>Predicci&oacute;n</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td align="center"><div id="resultado" class="resultado"></div></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+           </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+    <script src="fabric.min.js"/></script>
+    <script src="drawing.js"></script>
+    <script src="hermite.js"></script>
+
+    <script type="text/javascript">
+
+      var modelo = null;
+      var modelo2 = null;
+
+      //Tomar y configurar el canvas
+      var canvas = document.getElementById("bigcanvas");
+      var ctx1 = canvas.getContext("2d");
+      var smallcanvas = document.getElementById("smallcanvas");
+      var ctx2= smallcanvas.getContext("2d");
+
+      function borrar_dibujo() {
+          ctx1.clearRect(0, 0, canvas.width, canvas.height);
+          drawingcanvas.clear();
+          ctx2.clearRect(0, 0, canvas.width, canvas.height);
+          smallcanvas.clear();
+      }
+
+      function predecir() {
+            //Pasar canvas a version 28x28
+            resample_single(canvas, 28, 28, smallcanvas);
+
+            var imgData = ctx2.getImageData(0,0,28,28);
+            var arr = []; //El arreglo completo
+            var arr28 = []; //Al llegar a 28 posiciones se pone en 'arr' como un nuevo indice
+            for (var p=0, i=0; p < imgData.data.length; p+=4) {
+                var valor = imgData.data[p+3]/255;
+                arr28.push([valor]); //Agregar al arr28 y normalizar a 0-1. Aparte queda dentro de un arreglo en el indice 0... again
+                if (arr28.length == 28) {
+                    arr.push(arr28);
+                    arr28 = [];
+                }
+            }
+
+            arr = [arr]; //Meter el arreglo en otro arreglo por que si no tio tensorflow se enoja >:(
+            //Nah basicamente Debe estar en un arreglo nuevo en el indice 0, por ser un tensor4d en forma 1, 28, 28, 1
+            var tensor4 = tf.tensor4d(arr);
+
+            //Modelo 1
+            var resultados = modelo.predict(tensor4).dataSync();
+            var mayorIndice = resultados.indexOf(Math.max.apply(null, resultados));
+            console.log("Prediccion 1", mayorIndice);
+            document.getElementById("resultado").innerHTML = mayorIndice;
+
+            //Modelo 2
+            var resultados = modelo2.predict(tensor4).dataSync();
+            var mayorIndice = resultados.indexOf(Math.max.apply(null, resultados));
+
+            document.getElementById("resultado2").innerHTML = mayorIndice;
+         }
+
+      //Cargar modelo 1
+      (async () => {
+          console.log("Cargando modelo tradicional...");
+          modelo = await tf.loadLayersModel("model.json");
+          console.log("Modelo tradicional cargado...");
+
+      })();
+    </script>
+
+
+
+</body>
+</html>
