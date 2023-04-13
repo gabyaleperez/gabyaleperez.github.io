@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../estilos/styles.css">
+<style>
+body {
+    background:	rgb(230,230,230);
+}
+input[type=range][orient=vertical]
+{
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* Chromium */
+    width: 8px;
+    height: 175px;
+    padding: 0 5px;
+    margin: 12px 10px;
+}
+</style>
+<script>
+function install() {
+    let tags = document.getElementsByTagName("input");
+    function list() {
+        const toEx = (val) => parseInt(val,10).toString(16);
+        const r = document.getElementById("r1").value;
+        const g = document.getElementById("r2").value;
+        const b = document.getElementById("r3").value;
+        document.getElementsByTagName("body")[0].style.backgroundColor = 
+            'rgb(' + r + ',' + g + ',' + b + ')';
+    }
+    for (const elem of tags) {
+        elem.oninput= list;
+    }
+}
+</script>
+</head>
+<body onload="install()">
+    <div class="texto texto-center">
+        
+        <p>Pulse, mantenga pulsado y arrastre la paleta de desplazamiento hacia abajo y hacia arriba para cambiar el color de la pantalla. </p>
+        <p>Cuando has terminado, pulse el enlace "Continuar"</p>
+        
+    </div>
+
+    <div class="texto-center">
+        <span><input id="r1" type="range" orient="vertical" min="0" max="255" value="230"/></span>
+        <span><input id="r2" type="range" orient="vertical" min="0" max="255" value="230"/></span>
+        <span><input id="r3" type="range" orient="vertical" min="0" max="255" value="230"/></span>
+    </div>
+
+    <div id="next" class="texto-center" >
+        <a href="ejercicio_15.html">Continuar</a>
+    </div>
+</body>
+</html>

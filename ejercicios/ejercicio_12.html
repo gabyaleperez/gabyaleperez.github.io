@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<title>Ejercicios con el mouse</title>
+  <link rel="stylesheet" type="text/css" href="../estilos/styles.css">
+
+<style>
+table a:link, a:visited {
+  display: block;
+  margin: 6px;
+  width: 24px;
+  height: 24px;
+  line-height: 14px;
+  border-radius: 50%;
+  box-shadow: 0px 3px 3px #aaa, inset 0px 2px 3px #fff;
+  border: solid 1px transparent;
+}
+table a:active {
+  box-shadow: 0px 3px 4px #aaa inset, 0px 2px 3px #fff;
+}
+table {
+  text-align: unset;
+  margin-bottom: 60px;
+  margin-left:10%;
+  width: 80%;
+}
+tr.ticks td {
+  height: 34px;
+}
+</style>
+<script>
+let numChecked=0;
+const check = new Image(32,32);
+check.src = "images/checkmark2.gif";
+
+function install() {
+  let tags = document.getElementsByTagName("table")[0].getElementsByTagName("a");
+  for (const element of tags) {
+    element.onclick = (e) => {
+      e.preventDefault();
+      const a = e.target;
+      if (!a.getAttribute('data')) {
+        a.setAttribute('data', 1);
+        const base = document.querySelectorAll("tr.ticks td")[parseInt(a.getAttribute('data-id'),10)];
+        const elem = document.createElement('img');
+        elem.src=check.src;
+        base.appendChild(elem);
+        numChecked++;
+        if (numChecked === 11) {
+          document.getElementById("next").style.display='block';
+        }
+      }
+      return false;
+    };
+  }
+}
+</script>
+</head>
+<body onload="install()">
+  <div class="texto">
+  <p>
+    Haga click sobre cada botón para poder avanzar a la próxima pagina.
+  </p>
+  </div>
+
+  <table >
+    <tr>
+      <td><a href="#" style="background-color: #A4E30D;" data-id="0"></a></td>
+      <td><a href="#" style="background-color: #0DE359;" data-id="1"></a></td>
+      <td><a href="#" style="background-color: #0DE3C2;" data-id="2"></a></td>
+      <td><a href="#" style="background-color: #0D9AE3;" data-id="3"></a></td>
+      <td><a href="#" style="background-color: #0D30E3;" data-id="4"></a></td>
+      <td><a href="#" style="background-color: #540DE3;" data-id="5"></a></td>
+      <td><a href="#" style="background-color: #BD0DE3;" data-id="6"></a></td>
+      <td><a href="#" style="background-color: #E30D9F;" data-id="7"></a></td>
+      <td><a href="#" style="background-color: #E30D35;" data-id="8"></a></td>
+      <td><a href="#" style="background-color: #E34F0D;" data-id="9"></a></td>
+      <td><a href="#" style="background-color: #E3B80D;" data-id="10"></a></td>
+    </tr>
+    <tr class="ticks">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+
+  <div id="next" class="texto-center" style="display: none;">
+    <a href="ejercicio_13.html"><img src="images/botonContinuar.png" name="advance" alt="" border="0" /></a></td>
+  </div>
+</body>
+</html>

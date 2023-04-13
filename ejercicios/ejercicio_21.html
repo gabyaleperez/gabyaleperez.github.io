@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../estilos/styles.css">
+<script>
+var all = false;
+function install() {
+    const tags = document.getElementsByTagName("input");
+    const eventHandler = () => {
+        if (all) return;
+        let actual = true;
+        for (const elem of tags) {
+           actual &&= elem.checked;
+        }
+        if (actual) {
+            all = true;
+            document.getElementById("next").style.display='block';
+        }
+    };
+    for (const elem of tags) {
+        elem.onchange=eventHandler;
+    }
+}
+</script>
+</head>
+<body onload="install()" class="texto-center">
+    
+    <p> Las casillas dejan que elijas una o más opciones de un grupo de opciones.  </p>
+    <p> Clickeá dentro de cada casilla que está al lado de los números para continuar.</p>
+    <p> Solo se podrá continuar cuando se encuentren todas seleccionadas.</p>
+
+    <div style="margin-left: 40px;">
+    <form>
+    <input type="checkbox">Uno<br>
+    <input type="checkbox">Dos<br>
+    <input type="checkbox">Tres<br>
+    <input type="checkbox">Cuatro<br>
+    <input type="checkbox">Cinco<br>
+    <input type="checkbox">Seis<br>
+    <input type="checkbox">Siete<br>
+    <input type="checkbox">Ocho<br>
+    <input type="checkbox">Nueve<br>
+    </form>
+    </div>
+
+    <p id="next" style="display: none;"><a href="ejercicio_22.html"><img src="images/botonContinuar.png" alt=""  border="0"></a></p>
+</body>
+</html>

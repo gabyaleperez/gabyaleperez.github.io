@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../estilos/styles.css">
+<style>
+select {
+    font-size: 1.1em;
+    margin-left: 20px;
+}
+</style>
+<script>
+function check(index) {
+    const elem = document.getElementById("next");
+    if (index === 5) {
+        elem.style.display='block';
+    }
+    else {
+        elem.style.display='none';
+    }
+}
+</script>
+</head>
+<body>
+
+    <p>
+        La caja blanca debajo es un menú de desplazamiento.  Use la barra de desplazamiento hacia la derecha del menú para ver todas las opciones.  Pulse en el número "Seis", entonces pulse "Continuar."<br>
+    </p>
+
+    <p>
+        <form name="numberlist">
+            Seleccione una opción:<br>
+            <select name="theChoices" onchange="check(this.selectedIndex)" size="4">
+            <option>Uno</option>
+            <option>Dos</option>
+            <option>Tres</option>
+            <option>Cuatro</option>
+            <option>Cinco</option>
+            <option>Seis</option>
+            <option>Seite</option>
+            <option>Ocho</option>
+            <option>Nueve</option>
+            </select>
+        </form>
+    </p>
+
+    <div id="next" class="texto-center" style="display: none;" >
+        <a href="ejercicio_27.html"><img src="images/botonContinuar.png" alt=""  border="0"></a>
+    </div>   
+</body>
+</html>

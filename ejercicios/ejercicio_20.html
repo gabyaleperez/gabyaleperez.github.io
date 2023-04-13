@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../estilos/styles.css">
+<script>
+    const mess2 = new Image(425,160);
+    mess2.src="images/alertmessage.gif"
+
+    function flashMessage(event){
+        event.preventDefault();
+        const im = event.target;
+        const prev = im.src;
+        im.src = mess2.src;
+        setTimeout(() => im.src = prev, 10000);
+    }
+    function doAlert(){
+        if (confirm('¿Quieres continuar a la próxima página?')) {
+            window.location.href = "ejercicio_21.html";
+        }
+    }
+</script>
+</head>
+<body>
+
+    <table width="100%">
+        <tbody><tr align="left">
+        <td>
+            <img src="images/alert.gif" alt="ejemplo de una caja de aviso" name="mess1" onclick="flashMessage(event)" width="425" height="160" align="right">
+        Las ventanas de aviso son mensajes pequeños que la computadora pone en la pantalla para alertarnos de alguna información importante o para preguntarnos algo antes de ejecutar el comando.  A la derecha mostramos un ejemplo de una caja de aviso.
+
+        <p>Cuando la ventana aparece, tienes que leer el mensaje o la pregunta y pulsar el botón apropiado para responder.</p>  
+
+        <p>Pulse el enlace debajo para que salga una ventana de aviso, entonces lea el mensaje y pulse el botón apropiado.</p>
+
+        <a href="javascript:doAlert()">Pulse para mostrar la caja de aviso</a>
+        </td>
+        </tr>
+        </tbody></table>
+</body>
+</html>
