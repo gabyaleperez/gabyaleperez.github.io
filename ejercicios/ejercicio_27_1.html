@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../estilos/styles.css">
+    <style>
+    div {
+        margin-left: 60px;
+    }
+    span {
+        width: 280px;
+        margin-left: 30px;
+        display: inline-block;
+    }
+    input#submit {
+        margin-left: 130px;
+    }
+    img {
+        display: none;
+        vertical-align: bottom;
+    }
+    </style>
+    <script>
+        var all = false;
+        function install() {
+            const tags = document.getElementsByTagName("input");
+            const validate = (e) => {
+                if (e.value === e.parentNode.children[0].textContent) {
+                    e.disabled=true;
+                    e.parentNode.children[2].style.display='inline-block';
+
+                    for (const elem of tags) {
+                        if (!elem.disabled) {
+                            return;
+                        }
+                    }
+                    document.getElementById("submit").disabled = false;
+                }
+            };
+            const eventHandler = (e) => {
+                validate(e.target);
+            };
+            for (const elem of tags) {
+                elem.onkeyup=eventHandler;
+                validate(elem);
+            }
+        }
+    </script>
+</head>
+<body onload="install()">
+<div>
+    <form action="ejercicio_28.html" class="simpleborder"><br>
+    <p>
+        Copiar el texto en cada uno de las cajas correspondientes
+    </p>
+    <p>
+        <span>¡Que hermoso día!</span>
+        <input type="text" id="texto1" maxlength="100" />
+        <img src="images/checkmark2.gif" />
+    </p>
+    <p>
+        <span>curso_nivel_1@gmail.com</span>
+        <input type="text" id="texto2" maxlength="100"/>
+        <img src="images/checkmark2.gif" />
+    </p>
+    <p>
+        <span>¿MaÑaNa SeRá SáBaDo?</span>
+        <input type="text" id="texto3" maxlength="100"/>
+        <img src="images/checkmark2.gif" />
+    </p>
+    <p>
+        <input id="submit" type="submit" value="Continuar" disabled="true">
+    </p>
+    </form>
+</div>
+</body>
+</html>
