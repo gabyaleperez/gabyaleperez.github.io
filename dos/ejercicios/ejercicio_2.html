@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../estilos/styles.css">
+    <style>
+    div {
+        margin-left: 60px;
+    }
+    span {
+        width: 280px;
+        margin-left: 30px;
+        display: inline-block;
+    }
+    input#submit {
+        margin-left: 130px;
+    }
+    img {
+        display: none;
+        vertical-align: bottom;
+    }
+    </style>
+    <script>
+       var all = false;
+function install() {
+    const tags = document.getElementsByTagName("input");
+
+    const validate = () => {
+        let allFieldsValid = true; // Inicialmente, asumimos que todos los campos son válidos
+
+        for (const elem of tags) {
+            const inputId = elem.id;
+            const inputValue = elem.value.trim();
+            let fieldValid = true; // Asumimos que el campo actual es válido
+
+            switch (inputId) {
+                case "texto1":
+                    // Validar si el texto contiene una "á" mayúscula acentuada en cualquier posición
+                    if (!inputValue.includes("á")) {
+                        fieldValid = false; // Marcar campo como no válido
+                    }
+                    break;
+                case "texto2":
+                    // Validar si se ingresaron dos "@"
+                    if (inputValue !== "@@") {
+                        fieldValid = false; // Marcar campo como no válido
+                    }
+                    break;
+                case "texto3":
+                    // Validar si se ingresó "$"
+                    if (inputValue !== "$") {
+                        fieldValid = false; // Marcar campo como no válido
+                    }
+                    break;
+                case "texto4":
+                    // Validar si se ingresó "?"
+                    if (inputValue !== "?") {
+                        fieldValid = false; // Marcar campo como no válido
+                    }
+                    break;                    
+            }
+
+            if (!fieldValid) {
+                elem.parentNode.children[2].style.display = 'none'; // Ocultar la marca de verificación
+            } else {
+                elem.parentNode.children[2].style.display = 'inline-block'; // Mostrar la marca de verificación
+            }
+
+            if (!fieldValid) {
+                allFieldsValid = false; // Marcar que al menos un campo no es válido
+            }
+        }
+
+        if (allFieldsValid) {
+            all = true; // Cambiar all a true si todos los campos son válidos
+            document.getElementById("submit").disabled = false;
+        } else {
+            all = false; // Cambiar all a false si al menos un campo no es válido
+            document.getElementById("submit").disabled = true;
+        }
+    };
+
+    const eventHandler = () => {
+        validate();
+    };
+
+    for (const elem of tags) {
+        elem.onkeyup = eventHandler;
+    }
+}
+
+    </script>
+</head>
+<body onload="install()">
+<div>
+    <form action="ejercicio_28.html" class="simpleborder"><br>
+    <p>
+        Copiar el texto en cada uno de las cajas correspondientes
+    </p>
+    <p>
+        <span>Escriba una letra á (con tilde)</span>
+        <input type="text" id="texto1" maxlength="100" />
+        <img src="images/checkmark2.gif" />
+    </p>
+    <p>
+        <span>Escriba @@ (dos arrobas)</span>
+        <input type="text" id="texto2" maxlength="100"/>
+        <img src="images/checkmark2.gif" />
+    </p>
+    <p>
+        <span>Escriba $ (símbolo del pesos)</span>
+        <input type="text" id="texto3" maxlength="100"/>
+        <img src="images/checkmark2.gif" />
+    </p>
+    <p>
+        <span>Escriba ? (símbolo del pregunta)</span>
+        <input type="text" id="texto3" maxlength="100"/>
+        <img src="images/checkmark2.gif" />
+    </p>
+
+<BR>
+    <p>
+        <label for="texto4">Puede probar el texto aquí:</label>
+        <input type="text" id="texto4" maxlength="100"/>
+    </p>
+    <p>
+        <input id="submit" type="submit" value="Continuar">
+    </p>
+    </form>
+</div>
+</body>
+</html>
